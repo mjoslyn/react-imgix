@@ -120,6 +120,8 @@ class ReactImgix extends Component {
   };
   static defaultProps = {
     disableSrcSet: false,
+    srcName: 'src',
+    srcSetName: 'srcSet',
     onMounted: noop
   };
 
@@ -159,10 +161,10 @@ class ReactImgix extends Component {
       className: this.props.className,
       width: width <= 1 ? null : width,
       height: height <= 1 ? null : height,
-      src
+      [this.props.srcName]: src
     };
     if (!disableSrcSet) {
-      childProps.srcSet = srcSet;
+      childProps[this.props.srcSetName] = srcSet;
     }
 
     if (type === "bg") {
@@ -254,6 +256,7 @@ class SourceImpl extends Component {
   };
   static defaultProps = {
     disableSrcSet: false,
+    srcSetName: 'srcSet',
     onMounted: noop
   };
 
@@ -284,9 +287,9 @@ class SourceImpl extends Component {
     // attribute in favor of srcSet so we set that with either an actual
     // srcSet or a single src
     if (disableSrcSet) {
-      childProps.srcSet = src;
+      childProps[this.props.srcSetName] = src;
     } else {
-      childProps.srcSet = `${src}, ${srcSet}`;
+      childProps[this.props.srcSetName] = `${src}, ${srcSet}`;
     }
     // for now we'll take media from htmlAttributes which isn't ideal because
     //   a) this isn't an <img>
